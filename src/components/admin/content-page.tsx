@@ -185,7 +185,7 @@ export function AdminContentPage({ type }: { type?: string }) {
   );
 }
 
-function EntryEditor({ entry, initialKind, busy, onClose, onSave }: { entry?: SiteEntry; initialKind?: EntryKind; busy: boolean; onClose: () => void; onSave: (data: SiteEntryInput) => void }) {
+function EntryEditor({ entry, initialKind, busy, onClose, onSave }: { entry: SiteEntry | undefined; initialKind: EntryKind | undefined; busy: boolean; onClose: () => void; onSave: (data: SiteEntryInput) => void }) {
   const [form, setForm] = useState<SiteEntryInput>(() =>
     entry
       ? { kind: entry.kind, slug: entry.slug, title: entry.title, kicker: entry.kicker || "", summary: entry.summary || "", body: entry.body, price: entry.price, currency: entry.currency || "USD", published: entry.published, featured: entry.featured, sortOrder: entry.sortOrder, seoTitle: entry.seoTitle || "", seoDescription: entry.seoDescription || "" }

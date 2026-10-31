@@ -54,8 +54,8 @@ function AdminGate() {
 
 function crumb(pathname: string) {
   if (pathname.startsWith("/admin/content")) {
-    const type = pathname.split("/")[3];
-    return type ? type[0].toUpperCase() + type.slice(1) : "Content";
+    const type = pathname.split("/")[3] ?? "";
+    return type ? type.charAt(0).toUpperCase() + type.slice(1) : "Content";
   }
   if (pathname.startsWith("/admin/leads")) return "Leads";
   if (pathname.startsWith("/admin/settings")) return "Settings";
@@ -68,7 +68,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [mobile, setMobile] = useState(false);
-  const name = (user.user_metadata?.full_name as string | undefined) || user.email || "Studio admin";
+  const name = (user.user_metadata?.["full_name"] as string | undefined) || user.email || "Studio admin";
 
   const signOut = async () => {
     await qc.cancelQueries();
