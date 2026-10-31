@@ -664,3 +664,5 @@
 .not-found-page { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; }
 .not-found-page h1 { font-size: clamp(48px, 7vw, 80px); line-height: 1; margin: 18px 0 14px; color: #27322e; }
 .not-found-page p { color: #68716a; font-size: 15px; line-height: 1.7; max-width: 440px; margin: 0 0 28px; }
+.chart-line { stroke: #86d84e; }
+.chart-stop { stop-color: #86d84e; }
