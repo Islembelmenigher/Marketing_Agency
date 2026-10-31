@@ -5,7 +5,7 @@ import { ENTRY_KINDS, mapEntry, mapSettings } from "./site-types";
 import { createPublicClient, getCallerFingerprint } from "./site.server";
 
 export const listPublicEntries = createServerFn({ method: "GET" })
-  .inputValidator((data: { kind?: (typeof ENTRY_KINDS)[number] } | undefined) =>
+  .validator((data: { kind?: (typeof ENTRY_KINDS)[number] } | undefined) =>
     z.object({ kind: z.enum(ENTRY_KINDS).optional() }).optional().parse(data),
   )
   .handler(async ({ data }) => {
@@ -23,7 +23,7 @@ export const listPublicEntries = createServerFn({ method: "GET" })
   });
 
 export const getPublicEntry = createServerFn({ method: "GET" })
-  .inputValidator((data: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(data))
+  .validator((data: { slug: string }) => z.object({ slug: z.string().min(1).max(160) }).parse(data))
   .handler(async ({ data }) => {
     const client = createPublicClient();
     const { data: row, error } = await client
@@ -54,7 +54,7 @@ export type ContactResult =
   | { accepted: false; reason: "invalid" | "rate_limited" | "error" };
 
 export const submitContactRequest = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => data)
+  .validator((data: unknown) => data)
   .handler(async ({ data }): Promise<ContactResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
