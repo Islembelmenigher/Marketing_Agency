@@ -1,4 +1,6 @@
-import type { Tables } from "@/integrations/supabase/types";
+import type { Tables, TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
+
+export type SiteEntryInsertRow = TablesInsert<"site_entries">;
 
 export const ENTRY_KINDS = ["page", "service", "pricing", "project", "article", "policy"] as const;
 export type EntryKind = (typeof ENTRY_KINDS)[number];
@@ -91,8 +93,8 @@ export function mapEntry(row: Tables<"site_entries">): SiteEntry {
   };
 }
 
-export function entryInputToRow(input: Partial<SiteEntryInput>) {
-  const row: Record<string, unknown> = {};
+export function entryInputToRow(input: Partial<SiteEntryInput>): TablesUpdate<"site_entries"> {
+  const row: TablesUpdate<"site_entries"> = {};
   if (input.kind !== undefined) row.kind = input.kind;
   if (input.slug !== undefined) row.slug = input.slug;
   if (input.title !== undefined) row.title = input.title;
