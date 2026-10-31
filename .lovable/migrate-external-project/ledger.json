@@ -2,21 +2,117 @@
   "source": "replit",
   "artifact": "Loop-and-Lift-Growth-Studio.zip",
   "capabilities": [
-    {"capability": "code: public marketing site (home, services, service detail, industries, process, work, insights, insight detail, about, contact, privacy, cookies, terms, 404)", "source": "artifacts/loop-lift/src/App.tsx (wouter)", "outcome": "migrate to TanStack Start routes", "status": "in_progress", "next_action": "port pages and styles"},
-    {"capability": "code: admin dashboard (overview, content CRUD, leads inbox, settings)", "source": "App.tsx AdminGate/AdminLayout + api-server/routes/admin.ts", "outcome": "migrate; RLS-protected Cloud queries", "status": "in_progress", "next_action": "port admin routes"},
-    {"capability": "schema: site_entries, contact_requests, site_settings", "source": "lib/db/src/schema (Drizzle, Replit PostgreSQL)", "outcome": "migrate to Lovable Cloud", "status": "in_progress", "next_action": "create migration"},
-    {"capability": "records: starter site_entries (22 rows) + site_settings row", "source": "lib/db/seed-site.mjs", "outcome": "migrate (seeded in migration)", "status": "in_progress", "next_action": "insert in migration"},
-    {"capability": "records: live production rows (contact_requests leads, any edited site_entries, site_settings values)", "source": "Replit PostgreSQL (no export attached)", "outcome": "migrate", "status": "pending", "next_action": "user exports CSVs from Replit Database > My Data"},
-    {"capability": "auth identities", "source": "Clerk (no user export attached)", "outcome": "migrate to Lovable auth; users re-verify email and set a new password on first sign-in", "status": "pending", "next_action": "user exports Clerk users if anyone besides the admin needs an account"},
-    {"capability": "authorization: admin = verified email in ADMIN_EMAILS (belmenigherislem@gmail.com)", "source": "requireAdmin.ts + .replit userenv", "outcome": "migrate to user_roles + server-only admin email allowlist granted on email verification", "status": "in_progress", "next_action": "implement trigger and has_role RLS"},
-    {"capability": "public endpoint: POST /api/site/contact with honeypot + 5 req / 15 min per IP rate limit", "source": "api-server/routes/site.ts", "outcome": "migrate to server function with honeypot and IP rate limit", "status": "in_progress", "next_action": "implement"},
-    {"capability": "public endpoints: GET /api/site/entries, /api/site/entries/:slug, /api/site/settings, /api/healthz", "source": "api-server/routes", "outcome": "replaced by in-app reads (no external callers found)", "status": "in_progress", "next_action": "none"},
-    {"capability": "Clerk proxy middleware + Clerk keys", "source": "clerkProxyMiddleware.ts", "outcome": "removed with Clerk replacement", "status": "accepted", "next_action": "none"},
-    {"capability": "uploaded files / object storage", "source": "none detected", "outcome": "not applicable", "status": "accepted", "next_action": "none"},
-    {"capability": "schedules, webhooks, payments, email sending, AI", "source": "none detected", "outcome": "not applicable", "status": "accepted", "next_action": "none"},
-    {"capability": "mockup-sandbox artifact", "source": "artifacts/mockup-sandbox (Replit design canvas tooling)", "outcome": "not migrated (dev-only tooling)", "status": "accepted", "next_action": "none"},
-    {"capability": "secrets", "source": "CLERK_*, DATABASE_URL, REPL_ID, ADMIN_EMAILS", "outcome": "none needed: Clerk replaced, DB on Cloud, admin email stored server-side", "status": "accepted", "next_action": "none"},
-    {"capability": "cutover", "source": "Replit autoscale deployment", "outcome": "publish on Lovable, then point domain", "status": "pending", "next_action": "user publishes and moves domain when ready"},
-    {"capability": "verification", "source": "-", "outcome": "build, routes, contact form write, admin flow", "status": "pending", "next_action": "verify after build"}
+    {
+      "capability": "code: public marketing site (home, services, service detail, industries, process, work, insights, insight detail, about, contact, privacy, cookies, terms, 404)",
+      "source": "artifacts/loop-lift/src/App.tsx (wouter)",
+      "outcome": "migrate to TanStack Start routes",
+      "status": "verified",
+      "next_action": "none"
+    },
+    {
+      "capability": "code: admin dashboard (overview, content CRUD, leads inbox, settings)",
+      "source": "App.tsx AdminGate/AdminLayout + api-server/routes/admin.ts",
+      "outcome": "migrate; RLS-protected Cloud queries",
+      "status": "implemented",
+      "next_action": "verify after admin signs up with belmenigherislem@gmail.com"
+    },
+    {
+      "capability": "schema: site_entries, contact_requests, site_settings",
+      "source": "lib/db/src/schema (Drizzle, Replit PostgreSQL)",
+      "outcome": "migrate to Lovable Cloud",
+      "status": "verified",
+      "next_action": "none"
+    },
+    {
+      "capability": "records: starter site_entries (22 rows) + site_settings row",
+      "source": "lib/db/seed-site.mjs",
+      "outcome": "migrate (seeded in migration)",
+      "status": "verified",
+      "next_action": "none"
+    },
+    {
+      "capability": "records: live production rows (contact_requests leads, any edited site_entries, site_settings values)",
+      "source": "Replit PostgreSQL (no export attached)",
+      "outcome": "migrate",
+      "status": "pending",
+      "next_action": "user exports CSVs from Replit Database > My Data"
+    },
+    {
+      "capability": "auth identities",
+      "source": "Clerk (no user export attached)",
+      "outcome": "migrate to Lovable auth; users re-verify email and set a new password on first sign-in",
+      "status": "pending",
+      "next_action": "user exports Clerk users if anyone besides the admin needs an account"
+    },
+    {
+      "capability": "authorization: admin = verified email in ADMIN_EMAILS (belmenigherislem@gmail.com)",
+      "source": "requireAdmin.ts + .replit userenv",
+      "outcome": "migrate to user_roles + server-only admin email allowlist granted on email verification",
+      "status": "implemented",
+      "next_action": "verify on first admin sign-up (RLS blocks anon reads/writes: verified)"
+    },
+    {
+      "capability": "public endpoint: POST /api/site/contact with honeypot + 5 req / 15 min per IP rate limit",
+      "source": "api-server/routes/site.ts",
+      "outcome": "migrate to server function with honeypot and IP rate limit",
+      "status": "verified",
+      "next_action": "none"
+    },
+    {
+      "capability": "public endpoints: GET /api/site/entries, /api/site/entries/:slug, /api/site/settings, /api/healthz",
+      "source": "api-server/routes",
+      "outcome": "replaced by in-app reads (no external callers found)",
+      "status": "verified",
+      "next_action": "none"
+    },
+    {
+      "capability": "Clerk proxy middleware + Clerk keys",
+      "source": "clerkProxyMiddleware.ts",
+      "outcome": "removed with Clerk replacement",
+      "status": "accepted",
+      "next_action": "none"
+    },
+    {
+      "capability": "uploaded files / object storage",
+      "source": "none detected",
+      "outcome": "not applicable",
+      "status": "accepted",
+      "next_action": "none"
+    },
+    {
+      "capability": "schedules, webhooks, payments, email sending, AI",
+      "source": "none detected",
+      "outcome": "not applicable",
+      "status": "accepted",
+      "next_action": "none"
+    },
+    {
+      "capability": "mockup-sandbox artifact",
+      "source": "artifacts/mockup-sandbox (Replit design canvas tooling)",
+      "outcome": "not migrated (dev-only tooling)",
+      "status": "accepted",
+      "next_action": "none"
+    },
+    {
+      "capability": "secrets",
+      "source": "CLERK_*, DATABASE_URL, REPL_ID, ADMIN_EMAILS",
+      "outcome": "none needed: Clerk replaced, DB on Cloud, admin email stored server-side",
+      "status": "accepted",
+      "next_action": "none"
+    },
+    {
+      "capability": "cutover",
+      "source": "Replit autoscale deployment",
+      "outcome": "publish on Lovable, then point domain",
+      "status": "pending",
+      "next_action": "user publishes and moves domain when ready"
+    },
+    {
+      "capability": "verification",
+      "source": "-",
+      "outcome": "build OK, tests pass, public pages + contact write verified; admin flow pending real admin sign-in",
+      "status": "partial",
+      "next_action": "verify after build"
+    }
   ]
 }
