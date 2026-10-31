@@ -16,6 +16,9 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProcessRouteImport } from './routes/process'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
@@ -58,6 +61,21 @@ const ProcessRoute = ProcessRouteImport.update({
   path: '/process',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -97,6 +115,9 @@ export interface FileRoutesByFullPath {
   '/industries': typeof IndustriesRoute
   '/privacy': typeof PrivacyRoute
   '/process': typeof ProcessRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -112,6 +133,9 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesRoute
   '/privacy': typeof PrivacyRoute
   '/process': typeof ProcessRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -128,6 +152,9 @@ export interface FileRoutesById {
   '/industries': typeof IndustriesRoute
   '/privacy': typeof PrivacyRoute
   '/process': typeof ProcessRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/insights/$slug': typeof InsightsSlugRoute
@@ -145,6 +172,9 @@ export interface FileRouteTypes {
     | '/industries'
     | '/privacy'
     | '/process'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
     | '/terms'
     | '/work'
     | '/insights/$slug'
@@ -160,6 +190,9 @@ export interface FileRouteTypes {
     | '/industries'
     | '/privacy'
     | '/process'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
     | '/terms'
     | '/work'
     | '/insights/$slug'
@@ -175,6 +208,9 @@ export interface FileRouteTypes {
     | '/industries'
     | '/privacy'
     | '/process'
+    | '/reset-password'
+    | '/sign-in'
+    | '/sign-up'
     | '/terms'
     | '/work'
     | '/insights/$slug'
@@ -191,6 +227,9 @@ export interface RootRouteChildren {
   IndustriesRoute: typeof IndustriesRoute
   PrivacyRoute: typeof PrivacyRoute
   ProcessRoute: typeof ProcessRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
   TermsRoute: typeof TermsRoute
   WorkRoute: typeof WorkRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
@@ -250,6 +289,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -303,6 +363,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndustriesRoute: IndustriesRoute,
   PrivacyRoute: PrivacyRoute,
   ProcessRoute: ProcessRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
   TermsRoute: TermsRoute,
   WorkRoute: WorkRoute,
   InsightsSlugRoute: InsightsSlugRoute,

@@ -95,8 +95,8 @@ function SignInPage() {
         </form>
         <div className="auth-footer">
           {mode === "forgot" ? (
-            <button type="button" className="auth-row-link" onClick={() => { setMode("sign-in"); setError(""); setNotice(""); }} style={{ background: "none", border: 0, cursor: "pointer" }}>
-              <span className="auth-footer-link">Back to sign in</span>
+            <button type="button" onClick={() => { setMode("sign-in"); setError(""); setNotice(""); }}>
+              Back to sign in
             </button>
           ) : (
             <>
