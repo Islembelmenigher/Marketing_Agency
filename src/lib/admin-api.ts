@@ -64,7 +64,7 @@ export const adminEntriesQuery = (kind?: EntryKind) =>
 export async function createEntry(input: SiteEntryInput) {
   const { data, error } = await supabase
     .from("site_entries")
-    .insert(entryInputToRow(input) as never)
+    .insert({ ...entryInputToRow(input), kind: input.kind, slug: input.slug, title: input.title })
     .select()
     .single();
   if (error) {
@@ -77,7 +77,7 @@ export async function createEntry(input: SiteEntryInput) {
 export async function updateEntry(id: number, input: Partial<SiteEntryInput>) {
   const { data, error } = await supabase
     .from("site_entries")
-    .update(entryInputToRow(input) as never)
+    .update(entryInputToRow(input))
     .eq("id", id)
     .select()
     .single();
