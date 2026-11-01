@@ -16,3 +16,4 @@
 - Admin access comes from `public.user_roles`; a trigger on `auth.users` grants/revokes `admin` when a verified email matches the server-only `public.admin_emails` allowlist. Never derive admin from user metadata.
 - Admin dashboard pages live under `src/routes/_authenticated/admin*` and query Cloud from the browser as the signed-in user; RLS (`has_role(auth.uid(), 'admin')`) is the security boundary.
 - Brand styling is the editorial CSS class system in `src/styles.css` carried over from the original site; extend those classes rather than adding ad hoc colors in components.
+- The router uses setupRouterSsrQueryIntegration so queries prefetched in loaders reach the browser; without it the first browser render mismatches the server HTML.
