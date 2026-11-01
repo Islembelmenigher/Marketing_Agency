@@ -1,84 +1,115 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Check } from "lucide-react";
+import { createFileRoute, Link, notFound, type ErrorComponentProps, useRouter } from "@tanstack/react-router";
 import { PublicFrame } from "@/components/site/layout";
-import { ArrowText, ButtonLink, Eyebrow, StoreIllustration } from "@/components/site/brand";
-import { serviceCopy, services } from "@/lib/site-content";
+import { ButtonLink, Eyebrow } from "@/components/site/brand";
+import { ServiceLanding } from "@/components/services/service-page";
+import { getServicePage } from "@/lib/service-pages";
 
 export const Route = createFileRoute("/services/$slug")({
   loader: ({ params }) => {
-    const config = serviceCopy[params.slug];
-    const summary = services.find((s) => s.slug === params.slug);
-    if (!config || !summary) throw notFound();
-    return { config, title: summary.title };
+    const page = getServicePage(params.slug);
+    if (!page) throw notFound();
+    return { slug: page.slug };
   },
-  head: ({ loaderData }) => {
-    const title = loaderData ? `${loaderData.title} | Loop & Lift` : "Service | Loop & Lift";
-    const description = loaderData?.config.intro ?? "Ecommerce growth services from Loop & Lift.";
+  head: ({ params }) => {
+    const page = getServicePage(params.slug);
+    if (!page) {
+      return { meta: [{ title: "Service not found | Loop & Lift" }, { name: "robots", content: "noindex" }] };
+    }
+    const url = `/services/${page.slug}`;
     return {
       meta: [
-        { title },
-        { name: "description", content: description },
-        { property: "og:title", content: title },
-        { property: "og:description", content: description },
+        { title: page.seo.title },
+        { name: "description", content: page.seo.description },
+        { property: "og:title", content: page.seo.title },
+        { property: "og:description", content: page.seo.description },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: page.seo.title },
+        { name: "twitter:description", content: page.seo.description },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: page.name,
+            description: page.seo.description,
+            serviceType: page.name,
+            provider: { "@type": "Organization", name: "Loop & Lift Growth Studio" },
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+              { "@type": "ListItem", position: 2, name: "Services", item: "/services" },
+              { "@type": "ListItem", position: 3, name: page.name, item: url },
+            ],
+          }),
+        },
       ],
     };
   },
-  component: ServicePage,
+  component: ServicePageRoute,
+  notFoundComponent: ServiceNotFound,
+  errorComponent: ServiceError,
 });
 
-function ServicePage() {
+function ServicePageRoute() {
   const { slug } = Route.useParams();
-  const { config } = Route.useLoaderData();
+  const page = getServicePage(slug);
+  if (!page) return <ServiceNotFound />;
   return (
     <PublicFrame>
-      <main className="page-in">
-        <section className={`service-hero service-${slug}`}>
-          <div>
-            <Eyebrow>{config.kicker}</Eyebrow>
-            <h1 className="display">{config.headline}</h1>
-            <p>{config.intro}</p>
-            <ButtonLink to="/contact">Talk about this work</ButtonLink>
-          </div>
-          <div className="service-hero-graphic">
-            <StoreIllustration />
-          </div>
-        </section>
-        <section className="service-detail-content">
-          <div>
-            <Eyebrow>What this can include</Eyebrow>
-            <h2 className="display">
-              The work is shaped
-              <br />
-              around your <em>business.</em>
-            </h2>
-          </div>
-          <ul>
-            {config.bullets.map((b, i) => (
-              <li key={b}>
-                <span className="mono">0{i + 1}</span>
-                {b}
-                <Check size={17} />
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="detail-end">
-          <p>Good work starts with context. We’ll learn how your store works today, then recommend a sensible next step.</p>
-          <ButtonLink to="/contact">Start with a conversation</ButtonLink>
-        </section>
-        <section className="related-services">
-          <Eyebrow>Connected capabilities</Eyebrow>
-          {services
-            .filter((s) => s.slug !== slug)
-            .slice(0, 3)
-            .map((s) => (
-              <ArrowText key={s.slug} to="/services/$slug" params={{ slug: s.slug }}>
-                {s.title}
-              </ArrowText>
-            ))}
-        </section>
+      <ServiceLanding page={page} />
+    </PublicFrame>
+  );
+}
+
+function ServiceNotFound() {
+  return (
+    <PublicFrame>
+      <main className="not-found-page page-in">
+        <Eyebrow>Service not found</Eyebrow>
+        <h1 className="display">
+          We don’t offer <em>that one</em> yet.
+        </h1>
+        <p>The service you’re looking for doesn’t exist or has moved. Here’s everything we do.</p>
+        <ButtonLink to="/services">See all services</ButtonLink>
+      </main>
+    </PublicFrame>
+  );
+}
+
+function ServiceError({ error, reset }: ErrorComponentProps) {
+  const router = useRouter();
+  console.error(error);
+  return (
+    <PublicFrame>
+      <main className="not-found-page page-in">
+        <Eyebrow>Something went wrong</Eyebrow>
+        <h1 className="display">This page didn’t load.</h1>
+        <p>Please try again, or head back to the services overview.</p>
+        <div className="hero-actions">
+          <button
+            className="button-link"
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+          >
+            Try again
+          </button>
+          <Link to="/services" className="arrow-text">
+            All services
+          </Link>
+        </div>
       </main>
     </PublicFrame>
   );
