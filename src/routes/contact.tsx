@@ -9,6 +9,9 @@ import { services } from "@/lib/site-content";
 import { submitContactRequest } from "@/lib/site.functions";
 
 export const Route = createFileRoute("/contact")({
+  // ?service=<slug> pre-selects the service when arriving from a service page.
+  validateSearch: (search: Record<string, unknown>): { service?: string } =>
+    typeof search.service === "string" && search.service.length <= 80 ? { service: search.service } : {},
   head: () => ({
     meta: [
       { title: "Contact | Loop & Lift Growth Studio" },
@@ -29,7 +32,11 @@ function ContactPage() {
   const qc = useQueryClient();
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const [values, setValues] = useState(emptyForm);
+  const { service: serviceSlug } = Route.useSearch();
+  const [values, setValues] = useState(() => ({
+    ...emptyForm,
+    service: services.find((s) => s.slug === serviceSlug)?.title ?? "",
+  }));
   const mutation = useMutation({ mutationFn: (data: typeof emptyForm) => submit({ data }) });
 
   const onSubmit = (event: FormEvent) => {
