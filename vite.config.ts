@@ -12,4 +12,18 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Pre-bundle deps Vite otherwise discovers on first page load; late discovery
+    // re-optimizes and invalidates the client entry mid-load ("Failed to fetch
+    // dynamically imported module ... default-entry/client.tsx").
+    optimizeDeps: {
+      include: [
+        "@tanstack/router-core",
+        "@tanstack/router-core/isServer",
+        "@tanstack/router-core/ssr/client",
+        "seroval",
+        "@tanstack/react-router-ssr-query",
+      ],
+    },
+  },
 });
