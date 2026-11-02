@@ -384,7 +384,7 @@ function SearchHero() {
 }
 
 function SearchDetail() {
-  const rows = [
+  const rows: [string, string, string][] = [
     ["linen duvet cover", "Buy", "Collection"],
     ["linen vs cotton sheets", "Compare", "Guide"],
     ["how to wash linen", "Learn", "Article"],
