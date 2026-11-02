@@ -24,13 +24,10 @@ function PublicHeader() {
           ))}
         </nav>
         <div className="header-actions">
-          {session ? (
+          {/* No public sign-in link: the owner signs in at /admin/login directly. */}
+          {session && (
             <Link to="/admin" className="signin-link" data-testid="link-dashboard">
               Dashboard
-            </Link>
-          ) : (
-            <Link to="/sign-in" className="signin-link" data-testid="link-sign-in">
-              Sign in
             </Link>
           )}
           <ButtonLink to="/contact" className="header-cta">
