@@ -8,6 +8,13 @@
       "when": 1793469002830,
       "tag": "0000_loop_lift_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793627599176,
+      "tag": "0001_block_non_allowlisted_signups",
+      "breakpoints": true
     }
   ]
 }

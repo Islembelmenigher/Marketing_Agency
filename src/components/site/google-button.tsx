@@ -16,9 +16,10 @@ export function GoogleButton({ onError }: { onError: (message: string) => void }
   const [busy, setBusy] = useState(false);
   const onClick = async () => {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/sign-in` });
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/admin/login` });
     if (result.error) {
-      onError("Google sign-in didn’t complete. Please try again.");
+      const closed = /registration is closed|signups? not allowed/i.test(result.error.message ?? "");
+      onError(closed ? "That Google account isn’t authorised for the studio dashboard." : "Google sign-in didn’t complete. Please try again.");
       setBusy(false);
     }
   };
