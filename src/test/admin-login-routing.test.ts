@@ -18,8 +18,10 @@ describe("Admin sign-in routing", () => {
     expect(ids).toContain("/_authenticated");
   });
 
-  it("has no public sign-up page", () => {
-    const last = makeRouter().matchRoutes("/sign-up").at(-1)?.routeId;
-    expect(last === rootRouteId || last === undefined || last === "__root__").toBe(true);
+  it("has no public sign-up or sign-in page", () => {
+    for (const path of ["/sign-up", "/sign-in"]) {
+      const last: string | undefined = makeRouter().matchRoutes(path).at(-1)?.routeId;
+      expect([rootRouteId, undefined]).toContain(last);
+    }
   });
 });
