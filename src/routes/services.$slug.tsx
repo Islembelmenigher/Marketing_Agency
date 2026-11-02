@@ -1,4 +1,10 @@
-import { createFileRoute, Link, notFound, type ErrorComponentProps, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  type ErrorComponentProps,
+  useRouter,
+} from "@tanstack/react-router";
 import { PublicFrame } from "@/components/site/layout";
 import { ButtonLink, Eyebrow } from "@/components/site/brand";
 import { ServiceLanding } from "@/components/services/service-page";
@@ -13,7 +19,12 @@ export const Route = createFileRoute("/services/$slug")({
   head: ({ params }) => {
     const page = getServicePage(params.slug);
     if (!page) {
-      return { meta: [{ title: "Service not found | Loop & Lift" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [
+          { title: "Service not found | Loop & Lift" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
     }
     const url = `/services/${page.slug}`;
     return {

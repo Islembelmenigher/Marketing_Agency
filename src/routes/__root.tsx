@@ -65,9 +65,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Loop & Lift Growth Studio" },
-      { name: "description", content: "A founder-led ecommerce growth studio for conversion, analytics, retention and search." },
-      { property: "og:site_name", content: "Loop & Lift Growth Studio" },
+      { title: "Loop & Lift | Website Design, Conversion & Growth" },
+      {
+        name: "description",
+        content:
+          "We help small and medium-sized businesses improve their online presence, attract qualified visitors and convert more of those visitors into customers.",
+      },
+      { property: "og:site_name", content: "Loop & Lift" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

@@ -31,7 +31,12 @@ export function LegalPage({ kind }: { kind: LegalKind }) {
   return (
     <PublicFrame>
       <main className="page-in legal-page">
-        <PageIntro eyebrow="The useful details" title={<>{titles[kind]}</>} text="We believe the important things should be easy to find and easy to understand." marker="STUDIO POLICIES" />
+        <PageIntro
+          eyebrow="The useful details"
+          title={<>{titles[kind]}</>}
+          text="We believe the important things should be easy to find and easy to understand."
+          marker="STUDIO POLICIES"
+        />
         <article className="legal-content">
           {content[kind].map((p, i) => (
             <section key={i}>
@@ -41,7 +46,8 @@ export function LegalPage({ kind }: { kind: LegalKind }) {
           ))}
         </article>
         <div className="legal-contact">
-          Questions about any of this? <a href={`mailto:${DEFAULT_CONTACT_EMAIL}`}>Email the studio</a>.
+          Questions about any of this?{" "}
+          <a href={`mailto:${DEFAULT_CONTACT_EMAIL}`}>Email the studio</a>.
         </div>
       </main>
     </PublicFrame>

@@ -6,7 +6,10 @@ import { createPublicClient, getCallerFingerprint } from "./site.server";
 
 export const listPublicEntries = createServerFn({ method: "GET" })
   .validator((data: { kind?: (typeof ENTRY_KINDS)[number] } | undefined) =>
-    z.object({ kind: z.enum(ENTRY_KINDS).optional() }).optional().parse(data),
+    z
+      .object({ kind: z.enum(ENTRY_KINDS).optional() })
+      .optional()
+      .parse(data),
   )
   .handler(async ({ data }) => {
     const client = createPublicClient();
@@ -41,7 +44,11 @@ export const getPublicEntry = createServerFn({ method: "GET" })
 
 export const getPublicSettings = createServerFn({ method: "GET" }).handler(async () => {
   const client = createPublicClient();
-  const { data: row, error } = await client.from("site_settings").select("*").limit(1).maybeSingle();
+  const { data: row, error } = await client
+    .from("site_settings")
+    .select("*")
+    .limit(1)
+    .maybeSingle();
   if (error) {
     console.error("getPublicSettings failed", error);
     throw new Error("Could not load settings");
@@ -60,7 +67,9 @@ export const submitContactRequest = createServerFn({ method: "POST" })
 
     // Rate limit every attempt per caller, like the original endpoint.
     const fingerprint = await getCallerFingerprint();
-    const windowStart = new Date(Date.now() - CONTACT_RATE_LIMIT.windowMinutes * 60_000).toISOString();
+    const windowStart = new Date(
+      Date.now() - CONTACT_RATE_LIMIT.windowMinutes * 60_000,
+    ).toISOString();
     const { count, error: countError } = await supabaseAdmin
       .from("contact_attempts")
       .select("id", { count: "exact", head: true })

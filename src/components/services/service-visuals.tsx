@@ -6,7 +6,15 @@ import { Check, Lock, Search, ShoppingBag, Sparkles, Star } from "lucide-react";
  * All figures shown are illustrative and labelled as such.
  */
 
-function Frame({ label, className = "", children }: { label: string; className?: string; children: ReactNode }) {
+function Frame({
+  label,
+  className = "",
+  children,
+}: {
+  label: string;
+  className?: string;
+  children: ReactNode;
+}) {
   return (
     <div className={`sv ${className}`} role="img" aria-label={label}>
       <div aria-hidden="true" className="sv-inner">
@@ -16,7 +24,15 @@ function Frame({ label, className = "", children }: { label: string; className?:
   );
 }
 
-function Browser({ url, children, className = "" }: { url: string; children: ReactNode; className?: string }) {
+function Browser({
+  url,
+  children,
+  className = "",
+}: {
+  url: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <div className={`sv-browser ${className}`}>
       <div className="sv-browser-bar">
@@ -40,7 +56,10 @@ const Tag = ({ children }: { children: ReactNode }) => <span className="sv-tag">
 
 function WebHero() {
   return (
-    <Frame label="Illustrative mockup of a responsive Shopify product page on desktop and mobile" className="sv-web">
+    <Frame
+      label="Illustrative mockup of a responsive Shopify product page on desktop and mobile"
+      className="sv-web"
+    >
       <Browser url="northfield-home.com/products/linen-throw" className="sv-web-desktop">
         <div className="sv-store-nav">
           <b>NORTHFIELD</b>
@@ -155,7 +174,10 @@ function DataHero() {
     ["Purchase", 6],
   ] as const;
   return (
-    <Frame label="Illustrative analytics dashboard with a conversion funnel, an A/B test and a heatmap" className="sv-data">
+    <Frame
+      label="Illustrative analytics dashboard with a conversion funnel, an A/B test and a heatmap"
+      className="sv-data"
+    >
       <div className="sv-dash">
         <div className="sv-dash-head">
           <span>
@@ -221,7 +243,10 @@ function DataHero() {
 
 function DataDetail() {
   return (
-    <Frame label="Illustrative heatmap of a product page next to the path from visitor to customer" className="sv-heat">
+    <Frame
+      label="Illustrative heatmap of a product page next to the path from visitor to customer"
+      className="sv-heat"
+    >
       <div className="sv-heat-board">
         <div className="sv-heat-shot">
           <div className="sv-heat-img" />
@@ -267,9 +292,19 @@ function RetentionHero() {
           <span>3 new</span>
         </div>
         {[
-          ["Northfield Coffee", "Your beans, brewed properly", "A three-step guide for your first bag", true],
+          [
+            "Northfield Coffee",
+            "Your beans, brewed properly",
+            "A three-step guide for your first bag",
+            true,
+          ],
           ["Northfield Coffee", "Running low?", "Your usual roast is ready when you are", false],
-          ["Northfield Coffee", "A thank-you, just for you", "Early access to the winter roast", false],
+          [
+            "Northfield Coffee",
+            "A thank-you, just for you",
+            "Early access to the winter roast",
+            false,
+          ],
         ].map(([from, subject, preview, unread], i) => (
           <div className={`sv-mail ${unread ? "unread" : ""}`} key={i}>
             <span className="sv-avatar">N</span>
@@ -308,7 +343,10 @@ function RetentionDetail() {
     ["Day 60", "Loyal or lapsing", "VIP perks or win-back"],
   ];
   return (
-    <Frame label="Illustrative customer lifecycle timeline with a message for each stage" className="sv-life">
+    <Frame
+      label="Illustrative customer lifecycle timeline with a message for each stage"
+      className="sv-life"
+    >
       <div className="sv-life-track">
         {stages.map(([day, stage, msg], i) => (
           <div className="sv-life-stage" key={stage} style={{ ["--i" as string]: i }}>
@@ -328,7 +366,10 @@ function RetentionDetail() {
 
 function SearchHero() {
   return (
-    <Frame label="Illustrative search results page showing an AI answer and organic results featuring the store" className="sv-serp">
+    <Frame
+      label="Illustrative search results page showing an AI answer and organic results featuring the store"
+      className="sv-serp"
+    >
       <div className="sv-serp-window">
         <div className="sv-searchbar">
           <Search size={14} />
@@ -375,7 +416,11 @@ function SearchHero() {
       <div className="sv-rank">
         <small>Organic visibility</small>
         <svg viewBox="0 0 120 40" preserveAspectRatio="none">
-          <path d="M0 34 L20 31 L40 32 L60 24 L80 19 L100 12 L120 6" fill="none" strokeWidth="2.5" />
+          <path
+            d="M0 34 L20 31 L40 32 L60 24 L80 19 L100 12 L120 6"
+            fill="none"
+            strokeWidth="2.5"
+          />
         </svg>
         <span>Illustrative trend</span>
       </div>
@@ -429,12 +474,36 @@ function SearchDetail() {
 
 function GlobalHero() {
   const markets = [
-    { code: "DE", currency: "EUR", name: "Leinendecke, gewaschen", price: "89 €", note: "inkl. MwSt. & Zölle", pay: ["Klarna", "PayPal"] },
-    { code: "UK", currency: "GBP", name: "Washed linen throw", price: "£79", note: "Duties included", pay: ["Apple Pay", "Card"] },
-    { code: "CA", currency: "CAD", name: "Washed linen throw", price: "CA$129", note: "Duties paid at checkout", pay: ["Shop Pay", "Card"] },
+    {
+      code: "DE",
+      currency: "EUR",
+      name: "Leinendecke, gewaschen",
+      price: "89 €",
+      note: "inkl. MwSt. & Zölle",
+      pay: ["Klarna", "PayPal"],
+    },
+    {
+      code: "UK",
+      currency: "GBP",
+      name: "Washed linen throw",
+      price: "£79",
+      note: "Duties included",
+      pay: ["Apple Pay", "Card"],
+    },
+    {
+      code: "CA",
+      currency: "CAD",
+      name: "Washed linen throw",
+      price: "CA$129",
+      note: "Duties paid at checkout",
+      pay: ["Shop Pay", "Card"],
+    },
   ];
   return (
-    <Frame label="Illustrative localized storefront cards for Germany, the United Kingdom and Canada" className="sv-global">
+    <Frame
+      label="Illustrative localized storefront cards for Germany, the United Kingdom and Canada"
+      className="sv-global"
+    >
       <div className="sv-switch">
         {markets.map((m, i) => (
           <span key={m.code} className={i === 1 ? "on" : ""}>
@@ -480,7 +549,10 @@ function GlobalDetail() {
     ["FR", 46, 44, "plan"],
   ] as const;
   return (
-    <Frame label="Illustrative market prioritization matrix comparing opportunity and effort" className="sv-matrix">
+    <Frame
+      label="Illustrative market prioritization matrix comparing opportunity and effort"
+      className="sv-matrix"
+    >
       <div className="sv-matrix-plot">
         <span className="sv-q start">Start here</span>
         <span className="sv-q">Plan carefully</span>

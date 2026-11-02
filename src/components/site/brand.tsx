@@ -29,9 +29,17 @@ type BrandLinkProps = Omit<LinkComponentProps<"a">, "children" | "className"> & 
   className?: string;
 };
 
-export function ButtonLink({ children, className = "", light = false, ...rest }: BrandLinkProps & { light?: boolean }) {
+export function ButtonLink({
+  children,
+  className = "",
+  light = false,
+  ...rest
+}: BrandLinkProps & { light?: boolean }) {
   return (
-    <Link {...(rest as LinkComponentProps<"a">)} className={`button-link ${light ? "button-light" : ""} ${className}`}>
+    <Link
+      {...(rest as LinkComponentProps<"a">)}
+      className={`button-link ${light ? "button-light" : ""} ${className}`}
+    >
       {children}
       <ArrowUpRight size={16} />
     </Link>
@@ -51,7 +59,17 @@ export function Eyebrow({ children }: { children: ReactNode }) {
   return <div className="eyebrow section-eyebrow">{children}</div>;
 }
 
-export function PageIntro({ eyebrow, title, text, marker }: { eyebrow: string; title: ReactNode; text: string; marker?: string }) {
+export function PageIntro({
+  eyebrow,
+  title,
+  text,
+  marker,
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  text: string;
+  marker?: string;
+}) {
   return (
     <section className="page-intro">
       <div>
@@ -119,7 +137,12 @@ export function StoreIllustration() {
               <span>DEMAND OVER TIME</span>
               <span>Illustrative data</span>
             </div>
-            <svg viewBox="0 0 480 145" preserveAspectRatio="none" role="img" aria-label="Illustrative rising ecommerce trend line">
+            <svg
+              viewBox="0 0 480 145"
+              preserveAspectRatio="none"
+              role="img"
+              aria-label="Illustrative rising ecommerce trend line"
+            >
               <path
                 className="chart-line"
                 d="M0 122 C35 111 42 104 78 108 S119 85 152 97 190 80 220 84 265 62 291 76 328 39 356 54 390 23 419 39 452 13 480 20"
@@ -182,7 +205,15 @@ export function ErrorPanel({ message, retry }: { message: string; retry: () => v
   );
 }
 
-export function EmptyPanel({ title, text, action }: { title: string; text: string; action?: ReactNode }) {
+export function EmptyPanel({
+  title,
+  text,
+  action,
+}: {
+  title: string;
+  text: string;
+  action?: ReactNode;
+}) {
   return (
     <div className="empty-panel">
       <span className="empty-icon">
@@ -195,7 +226,15 @@ export function EmptyPanel({ title, text, action }: { title: string; text: strin
   );
 }
 
-export function Field({ label, children, required = false }: { label: string; children: ReactNode; required?: boolean }) {
+export function Field({
+  label,
+  children,
+  required = false,
+}: {
+  label: string;
+  children: ReactNode;
+  required?: boolean;
+}) {
   return (
     <label className="field">
       <span>

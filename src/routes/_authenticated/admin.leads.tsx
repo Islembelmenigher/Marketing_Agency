@@ -14,7 +14,12 @@ export const Route = createFileRoute("/_authenticated/admin/leads")({
 function AdminLeadsPage() {
   const [status, setStatus] = useState<"" | LeadStatus>("");
   const [selected, setSelected] = useState<ContactRequest | null>(null);
-  const { data: leads = [], isLoading, isError, refetch } = useQuery(adminLeadsQuery(status || undefined));
+  const {
+    data: leads = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(adminLeadsQuery(status || undefined));
   const qc = useQueryClient();
   const [notice, setNotice] = useState("");
 
@@ -43,7 +48,12 @@ function AdminLeadsPage() {
       </div>
       <div className="lead-filters">
         {(["", ...LEAD_STATUSES] as const).map((s) => (
-          <button key={s || "all"} className={status === s ? "selected" : ""} onClick={() => setStatus(s)} data-testid={`filter-leads-${s || "all"}`}>
+          <button
+            key={s || "all"}
+            className={status === s ? "selected" : ""}
+            onClick={() => setStatus(s)}
+            data-testid={`filter-leads-${s || "all"}`}
+          >
             {s || "All enquiries"}
             {s === "new" && <span />}
           </button>
@@ -65,7 +75,12 @@ function AdminLeadsPage() {
       ) : leads.length ? (
         <section className="lead-list">
           {leads.map((lead) => (
-            <button className={`lead-card ${selected?.id === lead.id ? "active" : ""}`} key={lead.id} onClick={() => setSelected(lead)} data-testid={`lead-card-${lead.id}`}>
+            <button
+              className={`lead-card ${selected?.id === lead.id ? "active" : ""}`}
+              key={lead.id}
+              onClick={() => setSelected(lead)}
+              data-testid={`lead-card-${lead.id}`}
+            >
               <div className="lead-card-top">
                 <span className="lead-avatar">{lead.name.slice(0, 1)}</span>
                 <div>
@@ -73,7 +88,9 @@ function AdminLeadsPage() {
                   <small>{lead.brand || "Independent brand"}</small>
                 </div>
                 <span className={`status-pill ${lead.status}`}>{lead.status}</span>
-                <span className="lead-created">{new Date(lead.createdAt).toLocaleDateString()}</span>
+                <span className="lead-created">
+                  {new Date(lead.createdAt).toLocaleDateString()}
+                </span>
               </div>
               <p>{lead.message}</p>
               <span className="lead-card-service">
@@ -86,7 +103,11 @@ function AdminLeadsPage() {
       ) : (
         <EmptyPanel
           title="No enquiries in this view."
-          text={status ? "Try another status filter, or return to all enquiries." : "New contact form messages will appear here, ready for a thoughtful reply."}
+          text={
+            status
+              ? "Try another status filter, or return to all enquiries."
+              : "New contact form messages will appear here, ready for a thoughtful reply."
+          }
           action={
             <a href={`mailto:${DEFAULT_CONTACT_EMAIL}`} className="arrow-text">
               Email the studio <ArrowUpRight size={15} />
@@ -95,14 +116,23 @@ function AdminLeadsPage() {
         />
       )}
       {selected && (
-        <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) setSelected(null); }}>
+        <div
+          className="modal-backdrop"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setSelected(null);
+          }}
+        >
           <section className="lead-modal">
             <div className="modal-head">
               <div>
                 <span className="eyebrow">ENQUIRY / #{selected.id}</span>
                 <h2>{selected.name}</h2>
               </div>
-              <button className="icon-close" onClick={() => setSelected(null)} aria-label="Close enquiry">
+              <button
+                className="icon-close"
+                onClick={() => setSelected(null)}
+                aria-label="Close enquiry"
+              >
                 <X size={18} />
               </button>
             </div>
@@ -122,7 +152,15 @@ function AdminLeadsPage() {
                 </span>
               )}
               {selected.siteUrl && (
-                <a href={selected.siteUrl.startsWith("http") ? selected.siteUrl : `https://${selected.siteUrl}`} target="_blank" rel="noreferrer">
+                <a
+                  href={
+                    selected.siteUrl.startsWith("http")
+                      ? selected.siteUrl
+                      : `https://${selected.siteUrl}`
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <Globe2 size={15} />
                   {selected.siteUrl}
                 </a>
@@ -133,12 +171,19 @@ function AdminLeadsPage() {
               <p>{selected.message}</p>
             </div>
             <div className="lead-detail-actions">
-              <a className="button-link" href={`mailto:${selected.email}?subject=${encodeURIComponent("Re: your note to Loop & Lift")}`}>
+              <a
+                className="button-link"
+                href={`mailto:${selected.email}?subject=${encodeURIComponent("Re: your note to Loop & Lift")}`}
+              >
                 Reply by email <ArrowUpRight size={15} />
               </a>
               <label className="field">
                 <span>Update status</span>
-                <select value={selected.status} onChange={(e) => changeStatus(selected, e.target.value as LeadStatus)} data-testid="select-lead-status">
+                <select
+                  value={selected.status}
+                  onChange={(e) => changeStatus(selected, e.target.value as LeadStatus)}
+                  data-testid="select-lead-status"
+                >
                   {LEAD_STATUSES.map((s) => (
                     <option value={s} key={s}>
                       {s}

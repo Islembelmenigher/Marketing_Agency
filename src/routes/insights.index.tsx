@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PublicFrame } from "@/components/site/layout";
-import { ButtonLink, EmptyPanel, ErrorPanel, LoadingRows, PageIntro } from "@/components/site/brand";
+import {
+  ButtonLink,
+  EmptyPanel,
+  ErrorPanel,
+  LoadingRows,
+  PageIntro,
+} from "@/components/site/brand";
 import { InsightCard } from "@/components/site/insight-card";
 import { publicEntriesQuery } from "@/lib/site-queries";
 
@@ -9,9 +15,17 @@ export const Route = createFileRoute("/insights/")({
   head: () => ({
     meta: [
       { title: "Insights | Loop & Lift Growth Studio" },
-      { name: "description", content: "Practical notes on ecommerce conversion, measurement and building better customer relationships." },
+      {
+        name: "description",
+        content:
+          "Practical notes on ecommerce conversion, measurement and building better customer relationships.",
+      },
       { property: "og:title", content: "Insights | Loop & Lift Growth Studio" },
-      { property: "og:description", content: "Practical notes on ecommerce conversion, measurement and building better customer relationships." },
+      {
+        property: "og:description",
+        content:
+          "Practical notes on ecommerce conversion, measurement and building better customer relationships.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -21,7 +35,12 @@ export const Route = createFileRoute("/insights/")({
 });
 
 function InsightsPage() {
-  const { data: entries = [], isLoading, isError, refetch } = useQuery(publicEntriesQuery("article"));
+  const {
+    data: entries = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery(publicEntriesQuery("article"));
   return (
     <PublicFrame>
       <main className="page-in">

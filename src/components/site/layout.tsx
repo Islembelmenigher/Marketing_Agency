@@ -34,7 +34,12 @@ function PublicHeader() {
             Let’s talk
           </ButtonLink>
         </div>
-        <button className="mobile-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)} data-testid="button-mobile-menu">
+        <button
+          className="mobile-menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen(!open)}
+          data-testid="button-mobile-menu"
+        >
           {open ? <X /> : <Menu />}
         </button>
       </div>
@@ -58,10 +63,9 @@ function PublicHeader() {
 
 const footerLinks = [
   { label: "Services", to: "/services" },
-  { label: "Industries", to: "/industries" },
-  { label: "Our approach", to: "/process" },
-  { label: "Selected work", to: "/work" },
-  { label: "Insights", to: "/insights" },
+  { label: "Our Work", to: "/work" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
 ] as const;
 
 function Footer() {
@@ -75,9 +79,9 @@ function Footer() {
             <Wordmark inverse />
           </Link>
           <p className="footer-note">
-            Good growth should feel
+            A better website.
             <br />
-            good to build.
+            Better results.
           </p>
         </div>
         <div className="footer-links">
@@ -109,7 +113,7 @@ function Footer() {
         <div className="footer-cta">
           <span className="eyebrow">A good place to start</span>
           <ButtonLink to="/contact" light>
-            Talk through your next move
+            Get a free website audit
           </ButtonLink>
         </div>
       </div>

@@ -7,6 +7,7 @@ export const contactSchema = z.object({
   brand: z.string().trim().max(200).nullish(),
   siteUrl: z.string().trim().max(500).nullish(),
   service: z.string().trim().max(160).nullish(),
+  budget: z.string().trim().max(100).nullish(),
   message: z.string().trim().min(10).max(5000),
   consent: z.literal(true),
   honeypot: z.string().max(200).nullish(),

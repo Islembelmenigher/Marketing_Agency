@@ -8,13 +8,17 @@ const makeRouter = () => createRouter({ routeTree, context: { queryClient: new Q
 
 describe("Admin sign-in routing", () => {
   it("serves /admin/login as its own page, outside the protected dashboard", () => {
-    const ids = makeRouter().matchRoutes("/admin/login").map((m) => m.routeId);
+    const ids = makeRouter()
+      .matchRoutes("/admin/login")
+      .map((m) => m.routeId);
     expect(ids.at(-1)).toBe("/admin_/login");
     expect(ids).not.toContain("/_authenticated");
   });
 
   it("keeps /admin behind the sign-in gate", () => {
-    const ids = makeRouter().matchRoutes("/admin").map((m) => m.routeId);
+    const ids = makeRouter()
+      .matchRoutes("/admin")
+      .map((m) => m.routeId);
     expect(ids).toContain("/_authenticated");
   });
 

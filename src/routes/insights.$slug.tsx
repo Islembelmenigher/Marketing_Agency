@@ -8,12 +8,20 @@ import { formatDate } from "@/lib/site-types";
 
 export const Route = createFileRoute("/insights/$slug")({
   loader: async ({ context, params }) => {
-    const entry = await context.queryClient.ensureQueryData(publicEntryQuery(params.slug)).catch(() => null);
-    return { seoTitle: entry?.seoTitle || entry?.title || null, seoDescription: entry?.seoDescription || entry?.summary || null };
+    const entry = await context.queryClient
+      .ensureQueryData(publicEntryQuery(params.slug))
+      .catch(() => null);
+    return {
+      seoTitle: entry?.seoTitle || entry?.title || null,
+      seoDescription: entry?.seoDescription || entry?.summary || null,
+    };
   },
   head: ({ loaderData }) => {
-    const title = loaderData?.seoTitle ? `${loaderData.seoTitle} | Loop & Lift` : "Studio note | Loop & Lift";
-    const description = loaderData?.seoDescription ?? "A practical note from the Loop & Lift studio.";
+    const title = loaderData?.seoTitle
+      ? `${loaderData.seoTitle} | Loop & Lift`
+      : "Studio note | Loop & Lift";
+    const description =
+      loaderData?.seoDescription ?? "A practical note from the Loop & Lift studio.";
     return {
       meta: [
         { title },
@@ -47,7 +55,9 @@ function InsightDetail() {
               <Eyebrow>{entry.kicker || "Studio note"}</Eyebrow>
               <h1 className="display">{entry.title}</h1>
               <p>{entry.summary}</p>
-              <span className="mono">{formatDate(entry.updatedAt, { year: "numeric", month: "long", day: "numeric" })}</span>
+              <span className="mono">
+                {formatDate(entry.updatedAt, { year: "numeric", month: "long", day: "numeric" })}
+              </span>
             </div>
             <article className="article-body prose">
               {entry.body
