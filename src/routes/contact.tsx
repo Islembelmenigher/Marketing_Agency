@@ -56,12 +56,17 @@ function ContactPage() {
           setValues(emptyForm);
           void qc.invalidateQueries({ queryKey: ["admin"] });
         } else if (result.reason === "rate_limited") {
-          setError("Too many requests. Please try again later.");
+          setError("Too many requests. Please try again in about 15 minutes.");
+        } else if (result.reason === "invalid") {
+          setError("Some details look off. Check your name, email and message, then try again.");
         } else {
           setError("Something got in the way. Please try again, or email us directly.");
         }
       },
-      onError: () => setError("Something got in the way. Please try again, or email us directly."),
+      onError: (err) => {
+        console.error("Contact form submission failed", err);
+        setError("We couldn’t reach our server. Check your connection and try again.");
+      },
     });
   };
 
@@ -131,15 +136,22 @@ function ContactPage() {
             <Field label="A little context" required>
               <textarea data-testid="input-contact-message" value={values.message} onChange={(e) => setValues({ ...values, message: e.target.value })} placeholder="What’s working, what feels stuck, or what are you curious about?" rows={5} />
             </Field>
-            <input
-              className="sr-only"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              name="company_website"
-              value={values.honeypot}
-              onChange={(e) => setValues({ ...values, honeypot: e.target.value })}
-            />
+            {/* Spam trap: hidden from people, and named so browser autofill and password managers leave it empty. */}
+            <div className="sr-only" aria-hidden="true">
+              <label>
+                Leave this empty
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="one-time-code"
+                  name="ll_hp_field"
+                  data-1p-ignore
+                  data-lpignore="true"
+                  value={values.honeypot}
+                  onChange={(e) => setValues({ ...values, honeypot: e.target.value })}
+                />
+              </label>
+            </div>
             <label className="consent">
               <input type="checkbox" checked={values.consent} onChange={(e) => setValues({ ...values, consent: e.target.checked })} data-testid="input-contact-consent" />
               <span>I’m happy for Loop & Lift to use these details to reply to my enquiry.</span>
