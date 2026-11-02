@@ -20,6 +20,7 @@ import { Route as ProcessRouteImport } from './routes/process'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
@@ -84,6 +85,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InsightsIndexRoute = InsightsIndexRouteImport.update({
   id: '/insights/',
   path: '/insights/',
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/insights/': typeof InsightsIndexRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/process': typeof ProcessRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
+  '/admin/login': typeof AdminLoginRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/insights': typeof InsightsIndexRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin_/login': typeof AdminLoginRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/insights/': typeof InsightsIndexRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/work'
     | '/admin'
+    | '/admin/login'
     | '/insights/$slug'
     | '/services/$slug'
     | '/insights/'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/process'
     | '/terms'
     | '/work'
+    | '/admin/login'
     | '/insights/$slug'
     | '/services/$slug'
     | '/insights'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/work'
     | '/_authenticated/admin'
+    | '/admin_/login'
     | '/insights/$slug'
     | '/services/$slug'
     | '/insights/'
@@ -274,6 +286,7 @@ export interface RootRouteChildren {
   ProcessRoute: typeof ProcessRoute
   TermsRoute: typeof TermsRoute
   WorkRoute: typeof WorkRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   InsightsSlugRoute: typeof InsightsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   InsightsIndexRoute: typeof InsightsIndexRoute
@@ -358,6 +371,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/insights/': {
       id: '/insights/'
@@ -466,6 +486,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProcessRoute: ProcessRoute,
   TermsRoute: TermsRoute,
   WorkRoute: WorkRoute,
+  AdminLoginRoute: AdminLoginRoute,
   InsightsSlugRoute: InsightsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   InsightsIndexRoute: InsightsIndexRoute,

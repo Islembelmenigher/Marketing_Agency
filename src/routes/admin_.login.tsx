@@ -66,7 +66,7 @@ function AdminLoginPage() {
           <GoogleButton onError={setError} />
         )}
         {error && (
-          <p className="form-error" role="alert" style={{ marginTop: 14 }}>
+          <p className="form-error" role="alert">
             {error}
           </p>
         )}
