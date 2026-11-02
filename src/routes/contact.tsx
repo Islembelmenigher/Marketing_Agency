@@ -10,8 +10,10 @@ import { submitContactRequest } from "@/lib/site.functions";
 
 export const Route = createFileRoute("/contact")({
   // ?service=<slug> pre-selects the service when arriving from a service page.
-  validateSearch: (search: Record<string, unknown>): { service?: string } =>
-    typeof search.service === "string" && search.service.length <= 80 ? { service: search.service } : {},
+  validateSearch: (search: Record<string, unknown>): { service?: string } => {
+    const service = search["service"];
+    return typeof service === "string" && service.length <= 80 ? { service } : {};
+  },
   head: () => ({
     meta: [
       { title: "Contact | Loop & Lift Growth Studio" },
