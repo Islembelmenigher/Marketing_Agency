@@ -14,7 +14,7 @@
 - Public pages read Cloud data only through `createServerFn` functions in `src/lib/site.functions.ts` using a publishable-key server client; RLS limits anon to published entries and settings.
 - Contact enquiries are written only by the `submitContactRequest` server function (service role), which applies the honeypot and per-IP rate limit; there is no anon INSERT policy on `contact_requests`.
 - Admin access comes from `public.user_roles`; a trigger on `auth.users` grants/revokes `admin` when a verified email matches the server-only `public.admin_emails` allowlist, and a BEFORE INSERT trigger rejects any new account whose email is not on that allowlist (no public registration). Never derive admin from user metadata.
-- Owner sign-in is Google-only at the unlinked `src/routes/admin_.login.tsx` (`/admin/login`, un-nested so the protected `/admin` layout never wraps it); public pages must not link to it.
+- Owner sign-in uses Supabase email/password at the unlinked `src/routes/admin_.login.tsx` (`/admin/login`, un-nested so the protected `/admin` layout never wraps it); public pages must not link to it.
 - Admin dashboard pages live under `src/routes/_authenticated/admin*` and query Cloud from the browser as the signed-in user; RLS (`has_role(auth.uid(), 'admin')`) is the security boundary.
 - Brand styling is the editorial CSS class system in `src/styles.css` carried over from the original site; extend those classes rather than adding ad hoc colors in components.
 - The router uses setupRouterSsrQueryIntegration so queries prefetched in loaders reach the browser; without it the first browser render mismatches the server HTML.

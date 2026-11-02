@@ -7,7 +7,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { isAdminQuery } from "@/lib/admin-api";
 import { AuthPage } from "@/components/site/layout";
 import { Mark } from "@/components/site/brand";
-import { GoogleButton } from "@/components/site/google-button";
 
 // Private owner sign-in. Reachable by URL only; never linked from public pages.
 export const Route = createFileRoute("/admin_/login")({
@@ -30,11 +29,37 @@ function AdminLoginPage() {
   const qc = useQueryClient();
   const { session, ready } = useAuth();
   const userId = session?.user.id;
-  const { data: isAdmin, isLoading } = useQuery(isAdminQuery(userId));
+  const { data: isAdmin, isLoading, isError } = useQuery(isAdminQuery(userId));
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    setBusy(true);
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) {
+        setError(signInError.message);
+        setBusy(false);
+      }
+    } catch {
+      setError("Sign-in failed. Please try again.");
+      setBusy(false);
+    }
+  };
 
   useEffect(() => {
     if (!userId || isLoading) return;
+    if (isError) {
+      setError(
+        "Signed in, but admin access could not be checked. Verify the database migrations and has_role function in Supabase.",
+      );
+      void supabase.auth.signOut();
+      return;
+    }
     if (isAdmin) {
       void navigate({ to: "/admin", replace: true });
       return;
@@ -44,9 +69,9 @@ function AdminLoginPage() {
       await qc.cancelQueries();
       qc.removeQueries({ queryKey: ["admin"] });
       await supabase.auth.signOut();
-      setError("That Google account isn’t authorised for the studio dashboard.");
+      setError("This account isn’t authorised for the studio dashboard.");
     })();
-  }, [userId, isAdmin, isLoading, navigate, qc]);
+  }, [userId, isAdmin, isLoading, isError, navigate, qc]);
 
   const checking = !ready || (!!userId && (isLoading || isAdmin));
 
@@ -57,13 +82,41 @@ function AdminLoginPage() {
           <Mark />
         </div>
         <h1>Studio sign-in</h1>
-        <p className="auth-sub">For the studio owner only. Use your authorised Google account.</p>
+        <p className="auth-sub">
+          For the studio owner only. Use your authorised email and password.
+        </p>
         {checking ? (
           <p className="auth-note" role="status">
             <LoaderCircle className="spin" size={15} /> Checking your session…
           </p>
         ) : (
-          <GoogleButton onError={setError} />
+          <form onSubmit={signIn}>
+            <div className="field">
+              <label htmlFor="admin-email">Email</label>
+              <input
+                id="admin-email"
+                type="email"
+                autoComplete="username"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="admin-password">Password</label>
+              <input
+                id="admin-password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="auth-submit" disabled={busy}>
+              {busy ? "Signing in…" : "Sign in"}
+            </button>
+          </form>
         )}
         {error && (
           <p className="form-error" role="alert">
