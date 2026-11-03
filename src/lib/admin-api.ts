@@ -29,10 +29,7 @@ export const adminOverviewQuery = () =>
   queryOptions({
     queryKey: ["admin", "overview"],
     queryFn: async () => {
-      const count = async (
-        table: "contact_requests" | "site_entries",
-        filter?: [string, string | boolean],
-      ) => {
+      const count = async (table: "contact_requests" | "site_entries", filter?: [string, string | boolean]) => {
         let q = supabase.from(table).select("id", { count: "exact", head: true });
         if (filter) q = q.eq(filter[0], filter[1]);
         const { count: c, error } = await q;
@@ -44,20 +41,10 @@ export const adminOverviewQuery = () =>
         count("contact_requests", ["status", "new"]),
         count("site_entries", ["published", true]),
         count("site_entries", ["published", false]),
-        supabase
-          .from("contact_requests")
-          .select("*")
-          .order("created_at", { ascending: false })
-          .limit(5),
+        supabase.from("contact_requests").select("*").order("created_at", { ascending: false }).limit(5),
       ]);
       if (recent.error) throw recent.error;
-      return {
-        totalLeads,
-        newLeads,
-        publishedEntries,
-        draftEntries,
-        recentLeads: recent.data.map(mapLead),
-      };
+      return { totalLeads, newLeads, publishedEntries, draftEntries, recentLeads: recent.data.map(mapLead) };
     },
   });
 
@@ -133,11 +120,7 @@ export const adminSettingsQuery = () =>
   queryOptions({
     queryKey: ["admin", "settings"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("site_settings")
-        .select("*")
-        .limit(1)
-        .maybeSingle();
+      const { data, error } = await supabase.from("site_settings").select("*").limit(1).maybeSingle();
       if (error) throw error;
       return mapSettings(data);
     },
