@@ -1,17 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  FileText,
-  Globe2,
-  Inbox,
-  MessageSquareText,
-  PenLine,
-  Plus,
-  Settings2,
-  ShoppingBag,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText, Globe2, Inbox, MessageSquareText, PenLine, Plus, Settings2, ShoppingBag } from "lucide-react";
 import { EmptyPanel, ErrorPanel } from "@/components/site/brand";
 import { adminOverviewQuery } from "@/lib/admin-api";
 import type { ContactRequest } from "@/lib/site-types";
@@ -42,24 +31,9 @@ function AdminOverviewPage() {
   const metrics = data
     ? [
         { title: "New enquiries", value: data.newLeads, note: "Needs a first look", Icon: Inbox },
-        {
-          title: "All enquiries",
-          value: data.totalLeads,
-          note: "Across the studio",
-          Icon: MessageSquareText,
-        },
-        {
-          title: "Published entries",
-          value: data.publishedEntries,
-          note: "Live on the website",
-          Icon: Globe2,
-        },
-        {
-          title: "Draft entries",
-          value: data.draftEntries,
-          note: "Ready when you are",
-          Icon: PenLine,
-        },
+        { title: "All enquiries", value: data.totalLeads, note: "Across the studio", Icon: MessageSquareText },
+        { title: "Published entries", value: data.publishedEntries, note: "Live on the website", Icon: Globe2 },
+        { title: "Draft entries", value: data.draftEntries, note: "Ready when you are", Icon: PenLine },
       ]
     : [];
   return (
@@ -159,8 +133,7 @@ function AdminOverviewPage() {
         </>
       )}
       <div className="admin-footnote">
-        <span className="pulse" /> Website status is checked by the platform.{" "}
-        <span className="mono">LOOP & LIFT / ADMIN</span>
+        <span className="pulse" /> Website status is checked by the platform. <span className="mono">LOOP & LIFT / ADMIN</span>
       </div>
     </main>
   );

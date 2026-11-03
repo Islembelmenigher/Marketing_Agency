@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  FileText,
-  Inbox,
-  LayoutDashboard,
-  Menu,
-  Settings2,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText, Inbox, LayoutDashboard, Menu, Settings2, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Wordmark } from "@/components/site/brand";
 import { isAdminQuery } from "@/lib/admin-api";
@@ -77,8 +68,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [mobile, setMobile] = useState(false);
-  const name =
-    (user.user_metadata?.["full_name"] as string | undefined) || user.email || "Studio admin";
+  const name = (user.user_metadata?.["full_name"] as string | undefined) || user.email || "Studio admin";
 
   const signOut = async () => {
     await qc.cancelQueries();
@@ -97,17 +87,9 @@ function AdminLayout() {
         <div className="admin-nav-label eyebrow">WORKSPACE</div>
         <nav>
           {adminNavigation.map((item) => {
-            const active =
-              item.to === "/admin"
-                ? pathname === "/admin" || pathname === "/admin/"
-                : pathname.startsWith(item.to);
+            const active = item.to === "/admin" ? pathname === "/admin" || pathname === "/admin/" : pathname.startsWith(item.to);
             return (
-              <Link
-                to={item.to}
-                onClick={() => setMobile(false)}
-                key={item.to}
-                className={`admin-nav-item ${active ? "active" : ""}`}
-              >
+              <Link to={item.to} onClick={() => setMobile(false)} key={item.to} className={`admin-nav-item ${active ? "active" : ""}`}>
                 <item.icon size={18} />
                 {item.label}
                 {item.label === "Leads" && <span className="nav-notice" />}
@@ -121,23 +103,14 @@ function AdminLayout() {
             <b>{name}</b>
             <small>Administrator</small>
           </div>
-          <button
-            onClick={signOut}
-            aria-label="Sign out"
-            title="Sign out"
-            data-testid="button-sign-out"
-          >
+          <button onClick={signOut} aria-label="Sign out" title="Sign out" data-testid="button-sign-out">
             <ArrowUpRight size={16} />
           </button>
         </div>
       </aside>
       <div className="admin-content">
         <header className="admin-topbar">
-          <button
-            className="mobile-menu admin-mobile-menu"
-            onClick={() => setMobile(!mobile)}
-            aria-label="Toggle dashboard navigation"
-          >
+          <button className="mobile-menu admin-mobile-menu" onClick={() => setMobile(!mobile)} aria-label="Toggle dashboard navigation">
             <Menu />
           </button>
           <div className="admin-breadcrumb">
